@@ -1,0 +1,13 @@
+# Local backups created by the installer
+backup/
+*.bak
+
+# Logs
+*.log
+
+# Editors / OS
+.vs/
+.vscode/
+.idea/
+Thumbs.db
+desktop.ini
