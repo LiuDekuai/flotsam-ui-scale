@@ -33,7 +33,7 @@ param(
     [switch]$WhatIf
 )
 
-$ErrorActionPreference = 'Stop'
+$ErrorActionPreference = 'Continue'
 
 $root = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 
@@ -99,17 +99,19 @@ Write-Host ''
 Start-Process $createUrl
 Read-Host '仓库创建好后，回到这里按回车继续'
 
-$existing = (& git -C $root remote get-url origin 2>$null)
-if ($LASTEXITCODE -eq 0 -and $existing) {
-    & git -C $root remote set-url origin "$repoUrl.git"
+$remotes = @(& git -C $root remote 2>&1 | ForEach-Object { $_.ToString().Trim() })
+if ($remotes -contains 'origin') {
+    $null = & git -C $root remote set-url origin "$repoUrl.git" 2>&1
 } else {
-    & git -C $root remote add origin "$repoUrl.git"
+    $null = & git -C $root remote add origin "$repoUrl.git" 2>&1
 }
 
 Write-Host ''
 Write-Step "推送 $branch 到 origin ..."
-& git -C $root push -u origin $branch
-if ($LASTEXITCODE -ne 0) {
+$pushOutput = & git -C $root push -u origin $branch 2>&1
+$pushExit = $LASTEXITCODE
+foreach ($line in $pushOutput) { Write-Host ("  " + $line.ToString()) }
+if ($pushExit -ne 0) {
     Write-Host ''
     Write-Host '推送失败。常见原因：' -ForegroundColor Red
     Write-Host '  1. 还没有登录 GitHub：弹出的登录窗口里完成授权后，重新运行本脚本即可。'
