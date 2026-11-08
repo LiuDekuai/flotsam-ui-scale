@@ -26,6 +26,7 @@
 - [还原](#还原)
 - [安全性说明](#安全性说明)
 - [常见问题](#常见问题)
+- [发布到 GitHub](#发布到-github)
 - [文件结构](#文件结构)
 - [移植到新版本](#移植到新版本)
 - [免责声明](#免责声明)
@@ -187,16 +188,43 @@ powershell -ExecutionPolicy Bypass -File .\scripts\uninstall.ps1
 **Q：找不到游戏目录？**
 用 `-GameDir` 指定，例如 `install.bat -GameDir "D:\Games\Flotsam"`。
 
+## 发布到 GitHub
+
+本仓库自带一个发布脚本，**不需要安装 GitHub CLI**，双击即可：
+
+1. 双击 **`publish-to-github.bat`**。
+2. 输入你的 GitHub 用户名，仓库名直接回车用默认的 `flotsam-ui-scale`。
+3. 浏览器会自动打开 GitHub 的「新建仓库」页面：
+   保持仓库名不变，**不要**勾选 *Add a README / .gitignore / license*，
+   点绿色按钮 **Create repository**。
+4. 回到命令行窗口按回车，脚本会自动 `git push`；
+   第一次会弹出 GitHub 登录窗口，登录完成后自动推送。
+5. 推送成功后自动打开仓库页面。
+
+也可以带参数直接运行：
+
+```bat
+publish-to-github.bat -UserName octocat -RepoName my-flotsam-mod
+```
+
+只看计划、不真正推送：
+
+```powershell
+powershell -ExecutionPolicy Bypass -File .\scripts\publish-to-github.ps1 -UserName octocat -WhatIf
+```
+
 ## 文件结构
 
 ```
 flotsam-ui-scale/
 ├─ install.bat                  安装入口（自动请求管理员权限）
 ├─ uninstall.bat                还原入口（自动请求管理员权限）
+├─ publish-to-github.bat        一键发布到 GitHub（可选）
 ├─ scripts/
 │  ├─ install.ps1               安装逻辑：校验、备份、打补丁、写配置
 │  ├─ uninstall.ps1             还原逻辑
-│  └─ run-elevated.ps1          提权启动器（处理含空格的路径与额外参数）
+│  ├─ run-elevated.ps1          提权启动器（处理含空格的路径与额外参数）
+│  └─ publish-to-github.ps1     发布逻辑
 ├─ tools/
 │  └─ find_ui_scale_slider.py   维护者工具：定位新版本的滑块偏移
 ├─ README.en.md                 English README
