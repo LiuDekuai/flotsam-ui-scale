@@ -21,7 +21,7 @@ Raise the **in-game UI scale limit of *Flotsam* from 125% to 150%**
 | --- | --- |
 | Game | **Flotsam** by Pajama Llama Games |
 | Stores | Steam (AppID `821250`), Epic Games Store, GOG |
-| Verified build | **1.1.0f5** (Unity `6000.3.26f1`, Windows x64, Epic) |
+| Verified build | **1.0.1f10_b3** (Unity `6000.3.28f1`, Epic, 2026-11-11) |
 | OS | Windows 10 / 11 |
 
 If your files do not match the recorded SHA-256 (other store / newer build),

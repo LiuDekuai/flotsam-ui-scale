@@ -45,12 +45,12 @@ trap {
 }
 
 # ---------------------------------------------------------------------------
-# Build-specific data (Flotsam 1.1.0f5, Unity 6000.3.26f1, Windows x64)
+# Build-specific data (Flotsam 1.0.1f10_b3, Unity 6000.3.28f1, Windows x64)
 # SHA-256 of the *unmodified* level1 / level2 files.
 # ---------------------------------------------------------------------------
 $KnownHashes = @{
-    'level1' = 'A15A40BD855589C84001B29002260999AAE096A2B1BF06AFF1D6A7FA17C61E13'
-    'level2' = '8A79413A6E6754526256FC283A190BC56C8184F39968AB56D21BAB5275D486D1'
+    'level1' = '67334511710E41D3CE7767604DA8FA3D4990EF1A7ED10D7412E4FBE2543809FE'
+    'level2' = 'E17D1913729498398EC0117A4D32A69E04470F2CAE7944469B24ED2395DF3412'
 }
 
 # Byte offset of each UIScaleSlider MonoBehaviour inside the file.
@@ -197,14 +197,16 @@ if ($WhatIf) {
     exit 0
 }
 
-# Back up the pristine originals once.
+# Back up the pristine originals (refreshed on every run so a game update
+# never leaves a stale backup behind).
 if (-not (Test-Path -LiteralPath $BackupDir)) {
     New-Item -ItemType Directory -Force -Path $BackupDir | Out-Null
 }
 foreach ($plan in $plans) {
     $backupPath = Join-Path $BackupDir ($plan.File + '.orig')
-    if (-not (Test-Path -LiteralPath $backupPath)) {
-        [System.IO.File]::WriteAllBytes($backupPath, $plan.Original)
+    $isNew = -not (Test-Path -LiteralPath $backupPath)
+    [System.IO.File]::WriteAllBytes($backupPath, $plan.Original)
+    if ($isNew) {
         Write-Host "  已备份原始文件 -> $backupPath"
     }
 }

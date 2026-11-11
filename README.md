@@ -57,7 +57,7 @@ Flotsam 的画面设置里，「UI 缩放」滑块最高只能拉到 **125%**。
 | 开发商 | Pajama Llama Games |
 | 平台 | Steam（AppID `821250`）/ Epic Games Store / GOG |
 | 类型 | 单机模拟经营 / 生存 |
-| 已验证版本 | **1.1.0f5**（Unity `6000.3.26f1`，Windows x64，Epic 版） |
+| 已验证版本 | **1.0.1f10_b3**（Unity `6000.3.28f1`，2026-11-11 更新，Epic 版） |
 | 系统 | Windows 10 / 11 |
 
 > Steam / GOG 版若与本仓库记录的 SHA-256 不一致，安装脚本会**拒绝执行并提示**，
@@ -159,7 +159,7 @@ powershell -ExecutionPolicy Bypass -File .\scripts\uninstall.ps1
 
 - **只改 4 个字节**：`level1` / `level2` 各 2 个字节（`0xA0` → `0xC0`），
   不新增、不删除任何数据，不改变文件结构。
-- **版本校验**：安装前计算 SHA-256，只有已知的 1.1.0f5 原版才会被修改；
+- **版本校验**：安装前计算 SHA-256，只有已知的 1.0.1f10_b3 原版才会被修改；
   其它版本、已被其它 MOD 改过的文件都会被拒绝。
 - **自动备份**：原始文件会备份到
   `%LOCALAPPDATA%\FlotsamUIScale\backup\`，即使校验逻辑失效也能手动恢复。
