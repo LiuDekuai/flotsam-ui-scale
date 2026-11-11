@@ -8,7 +8,7 @@
     and writes the chosen value into PlayerSettings.json.
 
 .PARAMETER Scale
-    New upper limit for the UI scale slider. 1.0 - 2.0, default 1.5.
+    New upper limit for the UI scale slider. 1.0 - 2.0, default 2.0.
 
 .PARAMETER GameDir
     Flotsam install folder (the one that contains Flotsam_Data).
@@ -26,7 +26,7 @@
 [CmdletBinding()]
 param(
     [ValidateRange(1.0, 2.0)]
-    [double]$Scale = 1.5,
+    [double]$Scale = 2.0,
 
     [string]$GameDir,
 
